@@ -1,4 +1,4 @@
-import type { MigrateUpArgs } from '@payloadcms/db-mongodb'
+import type { MigrateUpArgs } from '@payloadcms/db-postgres'
 
 import { home } from '../seed/home'
 

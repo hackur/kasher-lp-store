@@ -1,4 +1,5 @@
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
+import { neon } from '@neondatabase/serverless'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import {
   BoldFeature,
@@ -31,11 +32,21 @@ export default buildConfig({
   collections: [Pages, Users],
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
   cors: [process.env.NEXT_PUBLIC_PAYLOAD_URL || ''],
-  db: sqliteAdapter({
-    // In Vercel, use a path in /tmp which is writable
-    client: {
-      url: process.env.DATABASE_URI || (process.env.VERCEL ? 'file:/tmp/database.sqlite' : 'file:./database.sqlite'),
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
+      max: 10,
     },
+    // Use Neon serverless driver for Vercel's serverless environment
+    // This is more efficient for serverless deployments
+    ...(process.env.VERCEL
+      ? {
+          pool: undefined,
+          drizzle: {
+            driver: neon(process.env.DATABASE_URI || ''),
+          },
+        }
+      : {}),
   }),
   editor: lexicalEditor({
     features: () => {

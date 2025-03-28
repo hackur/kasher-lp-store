@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "build": "cross-env NODE_OPTIONS=--no-deprecation && pnpm run payload migrate && next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation && pnpm seed && next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:schema": "payload-graphql generate:schema",
@@ -19,7 +19,7 @@
     "@faceless-ui/css-grid": "^1.2.0",
     "@faceless-ui/modal": "^2.0.2",
     "@neondatabase/serverless": "^1.0.0",
-    "@payloadcms/db-sqlite": "^3.31.0",
+    "@payloadcms/db-postgres": "^3.31.0",
     "@payloadcms/next": "latest",
     "@payloadcms/plugin-cloud": "latest",
     "@payloadcms/plugin-form-builder": "latest",
