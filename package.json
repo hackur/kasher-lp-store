@@ -5,14 +5,14 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation node pre-build.js && next build",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation && pnpm seed && next dev",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "build": "next build",
+    "dev": "pnpm seed && next dev",
+    "generate:importmap": "payload generate:importmap",
     "generate:schema": "payload-graphql generate:schema",
-    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "seed": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && npm run payload migrate:fresh",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "generate:types": "payload generate:types",
+    "payload": "payload",
+    "seed": "payload migrate && npm run payload migrate:fresh",
+    "start": "next start"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
