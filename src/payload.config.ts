@@ -43,7 +43,7 @@ export default buildConfig({
       ? {
           pool: undefined, // Explicitly disable pool for Vercel/Drizzle
           drizzle: {
-            driver: neon(process.env.POSTGRES_URL || ''), // Use POSTGRES_URL on Vercel
+            driver: neon(process.env.POSTGRES_URL || ''), // Pass the neon driver factory
           },
         }
       : {}),

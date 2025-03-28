@@ -26,6 +26,7 @@
     "@payloadcms/richtext-lexical": "latest",
     "@vercel/edge-config": "^1.4.0",
     "cross-env": "^7.0.3",
+    "drizzle-orm": "^0.41.0",
     "graphql": "^16.9.0",
     "next": "^15.2.3",
     "payload": "latest",
