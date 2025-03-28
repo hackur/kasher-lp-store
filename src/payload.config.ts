@@ -62,7 +62,11 @@ export default buildConfig({
   }),
   globals: [MainMenu],
   graphQL: {
-    schemaOutputFile: path.resolve(dirname, 'generated-schema.graphql'),
+    // Only generate schema file in development environment
+    ...(process.env.NODE_ENV === 'production' || process.env.VERCEL
+      ? {}
+      : { schemaOutputFile: path.resolve(dirname, 'generated-schema.graphql') }
+    ),
   },
   plugins: [
     formBuilderPlugin({
@@ -76,6 +80,10 @@ export default buildConfig({
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    // Only generate TypeScript types in development environment
+    ...(process.env.NODE_ENV === 'production' || process.env.VERCEL
+      ? {}
+      : { outputFile: path.resolve(dirname, 'payload-types.ts') }
+    ),
   },
 })
