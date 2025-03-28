@@ -35,15 +35,17 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       // Standard pool for local development
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URL || '',
       max: 10,
     },
     // Use Neon driver for Vercel via Drizzle adapter
     ...(process.env.VERCEL
       ? {
           pool: undefined, // Required to disable standard pool on Vercel
+          // Explicitly signal SSL requirement to the adapter for Vercel/Neon
+          ssl: true,
           drizzle: {
-            driver: neon(process.env.POSTGRES_URL || ''), // Use POSTGRES_URL on Vercel
+            driver: neon(process.env.POSTGRES_URL || ''), // Neon driver uses connection string for SSL
           },
         }
       : {}),
