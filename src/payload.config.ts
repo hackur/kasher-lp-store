@@ -24,10 +24,14 @@ const dirname = path.dirname(filename)
 // eslint-disable-next-line no-restricted-exports
 export default buildConfig({
   admin: {
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
-    user: Users.slug,
+    // Only use importMap in development
+    ...(process.env.NODE_ENV === 'production' || process.env.VERCEL
+      ? { user: Users.slug }
+      : {
+          importMap: { baseDir: path.resolve(dirname) },
+          user: Users.slug,
+        }
+    ),
   },
   collections: [Pages, Users],
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
