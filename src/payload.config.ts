@@ -33,20 +33,13 @@ export default buildConfig({
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
   cors: [process.env.NEXT_PUBLIC_PAYLOAD_URL || ''],
   db: postgresAdapter({
+    // Use standard connection pool for database connections
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.VERCEL 
+        ? process.env.POSTGRES_URL 
+        : process.env.DATABASE_URI,
       max: 10,
     },
-    // Use Neon serverless driver for Vercel's serverless environment
-    // This is more efficient for serverless deployments
-    ...(process.env.VERCEL
-      ? {
-          pool: undefined,
-          drizzle: {
-            driver: neon(process.env.DATABASE_URI || ''),
-          },
-        }
-      : {}),
   }),
   editor: lexicalEditor({
     features: () => {
