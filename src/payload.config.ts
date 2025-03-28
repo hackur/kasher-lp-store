@@ -33,12 +33,16 @@ export default buildConfig({
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
   cors: [process.env.NEXT_PUBLIC_PAYLOAD_URL || ''],
   db: postgresAdapter({
-    // Use standard connection pool for database connections
-    pool: {
-      connectionString: process.env.VERCEL 
-        ? process.env.POSTGRES_URL 
-        : process.env.DATABASE_URI,
+    // Standard pool configuration is required by the adapter
+    pool: process.env.VERCEL ? {
+      // On Vercel, use POSTGRES_URL environment variable
+      connectionString: process.env.POSTGRES_URL || '',
       max: 10,
+      ssl: true
+    } : {
+      // For local development
+      connectionString: process.env.DATABASE_URI || '',
+      max: 10
     },
   }),
   editor: lexicalEditor({
