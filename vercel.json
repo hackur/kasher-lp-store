@@ -1,6 +1,9 @@
 {
   "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install",
   "framework": "nextjs",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "env": {
+    "DATABASE_URL": "postgres://neondb_owner:npg_vHoPN8OC1nUF@ep-tight-wind-a6i4u8n9-pooler.us-west-2.aws.neon.tech/neondb?sslmode=require"
+  }
 }
