@@ -121,3 +121,9 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
     },
   })
 }
+
+export async function down({ payload }: { payload: any }): Promise<void> {
+  // Placeholder for down migration (rollback)
+  // In a real rollback, you would delete the created entities in reverse order
+  console.log('Down migration executed for seed');
+}
