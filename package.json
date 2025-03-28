@@ -11,7 +11,7 @@
     "generate:schema": "payload-graphql generate:schema",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "seed": "npm run payload migrate:fresh",
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && npm run payload migrate:fresh",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
@@ -24,7 +24,9 @@
     "@payloadcms/plugin-cloud": "latest",
     "@payloadcms/plugin-form-builder": "latest",
     "@payloadcms/richtext-lexical": "latest",
+    "@types/bcrypt": "^5.0.2",
     "@vercel/edge-config": "^1.4.0",
+    "bcrypt": "^5.1.1",
     "cross-env": "^7.0.3",
     "drizzle-orm": "^0.41.0",
     "graphql": "^16.9.0",
