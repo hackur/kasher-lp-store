@@ -38,7 +38,7 @@ export default async function Page({ params: paramsPromise }: PageParams) {
 
   return (
     <React.Fragment>
-      <Blocks blocks={page.layout} />
+      <Blocks blocks={page?.layout} />
     </React.Fragment>
   )
 }

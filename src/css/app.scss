@@ -127,3 +127,244 @@ a {
 svg {
   vertical-align: middle;
 }
+
+/////////////////////////////
+// GRADIENT BACKGROUND STYLES
+/////////////////////////////
+
+.text-container {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  color: var(--kasher-white);
+  opacity: 0.95;
+  user-select: none;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  
+  .logo-container {
+    margin-bottom: 20px;
+    width: 180px;
+    height: 180px;
+    
+    .logo-image {
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    }
+  }
+  
+  .logo-text {
+    font-family: var(--font-heading), Arial, sans-serif;
+    font-size: 96px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    line-height: 1;
+    color: var(--kasher-green);
+  }
+  
+  .tagline {
+    font-family: var(--font-avenir), Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    color: var(--kasher-white);
+  }
+  
+  @media (max-width: 768px) {
+    .logo-container {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .logo-text {
+      font-size: 64px;
+    }
+    
+    .tagline {
+      font-size: 18px;
+    }
+  }
+}
+
+:root {
+  /* Kasher Brand Colors */
+  --kasher-green: #9aca3c;
+  --kasher-dark-green-1: #8bb836;
+  --kasher-dark-green-2: #699029;
+  --kasher-rich-black: #000005;
+  --kasher-white: #ffffff;
+  
+  /* Gradient Background Variables */
+  --color-bg1: var(--kasher-rich-black);
+  --color-bg2: var(--kasher-dark-green-2);
+  --color1: 154, 202, 60; /* Kasher Green RGB */
+  --color2: 139, 184, 54; /* Kasher Dark Green 1 RGB */
+  --color3: 105, 144, 41; /* Kasher Dark Green 2 RGB */
+  --color4: 0, 0, 5; /* Rich Black RGB */
+  --color5: 255, 255, 255; /* White RGB */
+  --color-interactive: 154, 202, 60; /* Kasher Green RGB */
+  --circle-size: 80%;
+  --blending: multiply;
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--kasher-rich-black), var(--kasher-dark-green-2));
+  top: 0;
+  left: 0;
+
+  svg {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 0;
+    height: 0;
+  }
+
+
+  .gradients-container {
+    filter: url(#goo) blur(100px);
+    width: 100%;
+    height: 100%;
+  }
+
+  .g1 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: center center;
+    animation: moveVertical 30s ease infinite;
+
+    opacity: 1;
+  }
+
+  .g2 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: calc(50% - 400px);
+    animation: moveInCircle 20s reverse infinite;
+
+    opacity: 1;
+  }
+
+  .g3 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2 + 200px);
+    left: calc(50% - var(--circle-size) / 2 - 500px);
+
+    transform-origin: calc(50% + 400px);
+    animation: moveInCircle 40s linear infinite;
+
+    opacity: 1;
+  }
+
+  .g4 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: calc(50% - 200px);
+    animation: moveHorizontal 40s ease infinite;
+
+    opacity: 0.7;
+  }
+
+  .g5 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: calc(var(--circle-size) * 2);
+    height: calc(var(--circle-size) * 2);
+    top: calc(50% - var(--circle-size));
+    left: calc(50% - var(--circle-size));
+
+    transform-origin: calc(50% - 800px) calc(50% + 200px);
+    animation: moveInCircle 20s ease infinite;
+
+    opacity: 1;
+  }
+
+  .interactive {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: 100%;
+    height: 100%;
+    top: -50%;
+    left: -50%;
+
+    opacity: 0.7;
+  }
+}
