@@ -1,4 +1,4 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import {
   BoldFeature,
@@ -31,9 +31,10 @@ export default buildConfig({
   collections: [Pages, Users],
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
   cors: [process.env.NEXT_PUBLIC_PAYLOAD_URL || ''],
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || 'postgresql://postgres:postgres@localhost:5432/payload',
+  db: sqliteAdapter({
+    // In Vercel, use a path in /tmp which is writable
+    client: {
+      url: process.env.DATABASE_URI || (process.env.VERCEL ? 'file:/tmp/database.sqlite' : 'file:./database.sqlite'),
     },
   }),
   editor: lexicalEditor({
