@@ -21,6 +21,23 @@ import { MainMenu } from './globals/MainMenu'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Define DB adapter configuration based on environment
+const dbAdapter = process.env.VERCEL
+  ? postgresAdapter({
+      // Vercel/Neon configuration using Drizzle
+      drizzle: {
+        driver: neon(process.env.POSTGRES_URL || ''),
+      },
+      // Ensure pool is not configured for Vercel
+    })
+  : postgresAdapter({
+      // Local development configuration using standard pool
+      pool: {
+        connectionString: process.env.DATABASE_URL || '',
+        max: 10,
+      },
+    })
+
 // eslint-disable-next-line no-restricted-exports
 export default buildConfig({
   admin: {
@@ -32,24 +49,7 @@ export default buildConfig({
   collections: [Pages, Users],
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
   cors: [process.env.NEXT_PUBLIC_PAYLOAD_URL || ''],
-  db: postgresAdapter({
-    pool: {
-      // Standard pool for local development
-      connectionString: process.env.DATABASE_URL || '',
-      max: 10,
-    },
-    // Use Neon driver for Vercel via Drizzle adapter
-    ...(process.env.VERCEL
-      ? {
-          pool: undefined, // Required to disable standard pool on Vercel
-          // Explicitly signal SSL requirement to the adapter for Vercel/Neon
-          ssl: true,
-          drizzle: {
-            driver: neon(process.env.POSTGRES_URL || ''), // Neon driver uses connection string for SSL
-          },
-        }
-      : {}),
-  }),
+  db: dbAdapter, // Use the environment-specific adapter config
   editor: lexicalEditor({
     features: () => {
       return [
