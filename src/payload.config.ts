@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { neon } from '@neondatabase/serverless'
+// We won't use the direct neon import as it seems to cause issues in the build process
+// import { neon } from '@neondatabase/serverless'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import {
   BoldFeature,
@@ -33,16 +34,12 @@ export default buildConfig({
   // We need to set CORS rules pointing to our hosted domains for the frontend to be able to submit to our API
   cors: [process.env.NEXT_PUBLIC_PAYLOAD_URL || ''],
   db: postgresAdapter({
-    // Standard pool configuration is required by the adapter
-    pool: process.env.VERCEL ? {
-      // On Vercel, use POSTGRES_URL environment variable
-      connectionString: process.env.POSTGRES_URL || '',
+    // Standard pool configuration for PostgreSQL
+    pool: {
+      // Use the appropriate connection string based on environment
+      connectionString: process.env.DATABASE_URI || process.env.POSTGRES_URL || '',
       max: 10,
-      ssl: true
-    } : {
-      // For local development
-      connectionString: process.env.DATABASE_URI || '',
-      max: 10
+      ssl: false
     },
   }),
   editor: lexicalEditor({
